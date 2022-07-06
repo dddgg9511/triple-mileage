@@ -3,6 +3,7 @@ package com.choo.triple.domain.review.service;
 import com.choo.triple.domain.event.dto.EventRequest;
 import com.choo.triple.domain.event.enums.ActionType;
 import com.choo.triple.domain.event.enums.ResourceType;
+import com.choo.triple.domain.review.dto.ReviewResponse;
 import com.choo.triple.domain.review.entity.Review;
 import com.choo.triple.domain.review.repository.ReviewRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,9 +42,9 @@ class ReviewServiceTest {
             @Test
             @DisplayName("리뷰를 저장한다.")
             void it_save_review(){
-                reviewService.actionReviewEvent(eventRequest);
+                ReviewResponse reviewResponse = reviewService.actionReviewEvent(eventRequest);
 
-                Review review = reviewRepository.findById(eventRequest.getReviewId()).get();
+                Review review = reviewRepository.findById(reviewResponse.getId()).get();
                 assertThat(review.getContent()).isEqualTo(eventRequest.getContent());
                 assertThat(review.getPlaceId()).isEqualTo(eventRequest.getPlaceId());
                 assertThat(review.getUserId()).isEqualTo(eventRequest.getUserId());
@@ -66,7 +67,7 @@ class ReviewServiceTest {
             @DisplayName("리뷰를 수정한다.")
             void it_mod_review(){
                 reviewService.actionReviewEvent(eventRequest);
-                Review review = reviewRepository.findById(eventRequest.getReviewId()).get();
+                Review review = reviewRepository.findById(orgReview.getId()).get();
 
                 assertThat(review.getContent()).isEqualTo(eventRequest.getContent());
             }

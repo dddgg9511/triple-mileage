@@ -3,6 +3,7 @@ package com.choo.triple.domain.review.service;
 import com.choo.triple.domain.event.dto.EventRequest;
 import com.choo.triple.domain.event.enums.ActionType;
 import com.choo.triple.domain.review.action.ReviewAction;
+import com.choo.triple.domain.review.dto.ReviewResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -19,8 +20,8 @@ public class ReviewService {
                 .collect(Collectors.toMap(ReviewAction::getAction, Function.identity()));
     }
 
-    public void actionReviewEvent(EventRequest eventRequest){
-        actionMap.get(eventRequest.getAction()).action(eventRequest);
+    public ReviewResponse actionReviewEvent(EventRequest eventRequest){
+        return actionMap.get(eventRequest.getAction()).action(eventRequest);
     }
 
 }
