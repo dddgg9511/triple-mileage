@@ -85,6 +85,7 @@ class ReviewServiceTest {
             void setUp(){
                 orgReview = prepareReview(UUID.randomUUID(), UUID.randomUUID());
                 eventRequest = prepareEventRequest(ActionType.DELETE, orgReview.getUserId(), orgReview.getPlaceId(), "");
+                setReviewId(eventRequest, orgReview.getId());
             }
 
             @Test
