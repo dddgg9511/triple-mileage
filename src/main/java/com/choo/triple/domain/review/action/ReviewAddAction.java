@@ -15,7 +15,9 @@ public class ReviewAddAction implements ReviewAction{
 
     @Override
     public ReviewResponse action(EventRequest eventRequest) {
-        return null;
+        Review review = Review.of(eventRequest);
+        Review saveReview = reviewRepository.save(review);
+        return ReviewResponse.of(saveReview);
     }
 
     @Override
