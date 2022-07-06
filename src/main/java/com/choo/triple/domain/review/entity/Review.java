@@ -1,7 +1,8 @@
 package com.choo.triple.domain.review.entity;
 
 import com.choo.triple.common.entity.BaseEntity;
-import lombok.Getter;
+import com.choo.triple.domain.event.dto.EventRequest;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.SQLDelete;
 
@@ -11,6 +12,9 @@ import java.util.UUID;
 
 @Getter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class Review extends BaseEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -26,4 +30,13 @@ public class Review extends BaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reviewId")
     List<Photo> photos;
+
+    public static Review of(EventRequest eventRequest){
+        return Review.builder()
+                .id(eventRequest.getReviewId())
+                .content(eventRequest.getContent())
+                .userId(eventRequest.getUserId())
+                .placeId(eventRequest.getPlaceId())
+                .build();
+    }
 }
