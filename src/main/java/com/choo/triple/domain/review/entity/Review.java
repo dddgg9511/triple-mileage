@@ -39,4 +39,8 @@ public class Review extends BaseEntity {
                 .placeId(eventRequest.getPlaceId())
                 .build();
     }
+
+    public void updateContent(String content){
+        this.content = content;
+    }
 }

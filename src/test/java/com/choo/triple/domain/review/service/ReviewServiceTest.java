@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -61,6 +62,7 @@ class ReviewServiceTest {
             void setUp(){
                 orgReview = prepareReview(UUID.randomUUID(), UUID.randomUUID());
                 eventRequest = prepareEventRequest(ActionType.MOD, orgReview.getUserId(), orgReview.getPlaceId(), "update Review Content");
+                setReviewId(eventRequest, orgReview.getId());
             }
 
             @Test
@@ -100,7 +102,6 @@ class ReviewServiceTest {
         return EventRequest.builder()
                 .type(ResourceType.REVIEW)
                 .action(action)
-                .reviewId(UUID.randomUUID())
                 .content(content)
                 .attachedPhotoIds(null)
                 .userId(userId)
@@ -111,5 +112,9 @@ class ReviewServiceTest {
     public Review prepareReview(UUID userId, UUID placeId){
         EventRequest eventRequest = prepareEventRequest(ActionType.ADD, userId, placeId, "original Review Content");
         return reviewRepository.save(Review.of(eventRequest));
+    }
+
+    public void setReviewId(EventRequest request, UUID id){
+        ReflectionTestUtils.setField(request, "reviewId", id);
     }
 }
