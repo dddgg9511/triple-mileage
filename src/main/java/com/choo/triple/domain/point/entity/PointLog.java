@@ -31,4 +31,6 @@ public class PointLog extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "review_id")
     private Review review;
+
+    private Long point;
 }

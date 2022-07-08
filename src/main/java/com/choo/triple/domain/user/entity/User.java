@@ -13,12 +13,8 @@ import java.util.UUID;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "user_id", columnDefinition = "BINARY(16)")
-    private UUID uuid;
+    private UUID id;
 
     private String name;
-
-    private Long point;
 }
